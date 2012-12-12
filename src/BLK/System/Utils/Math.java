@@ -91,5 +91,16 @@ System.out.println(p2);
         return Math.numToString(java.lang.Math.abs(v.hashCode()));
     }
 
+    public static java.lang.String numToString(int num,int stringLong){return numToString(new Long(java.lang.String.valueOf(num)), stringLong);}
+    public static java.lang.String numToString(long num,int stringLong)
+    {
+        java.lang.String n=java.lang.String.valueOf(num);
 
+        while (n.length()<stringLong)
+            n="0"+n;
+
+        return n;
+
+
+    }
 }

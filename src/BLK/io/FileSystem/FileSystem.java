@@ -234,7 +234,7 @@ public abstract class FileSystem
         final FileSystem other = (FileSystem) obj;
         if ((this.getPath() == null) ? (other.getPath() != null) : !this.getPath().equalsIgnoreCase(other.getPath()))
             return false;
-
+ 
         return true;
     }
 

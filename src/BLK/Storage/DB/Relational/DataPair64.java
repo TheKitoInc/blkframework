@@ -12,9 +12,10 @@
  *
  */
 
-package BLK.io.Network.Protocols.Application.Sql;
+package BLK.Storage.DB.Relational;
 
 import BLK.System.Utils.Coder.Base64;
+import BLK.io.Network.Protocols.Application.Sql.Connection;
 import java.sql.SQLException;
 
 /**

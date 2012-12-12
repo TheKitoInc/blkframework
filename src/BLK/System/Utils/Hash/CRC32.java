@@ -1,4 +1,7 @@
-/*
+/******************************************************************************
+ *
+ * Copyright (c) 1998-2000 by Mindbright Technology AB, Stockholm, Sweden.
+ *                 www.mindbright.se, info@mindbright.se
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -10,14 +13,13 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- */
-
+ *****************************************************************************
+ * $Author: marcus $
+ * $Date: 2000/12/20 21:48:30 $
+ * $Name:  $
+ *****************************************************************************/
 package BLK.System.Utils.Hash;
 
-/**
- *
- * @author The Blankis < blankitoracing@gmail.com >
- */
 public abstract class CRC32 {
   /**
    * This table simply represent the results of eight shift/xor operations for

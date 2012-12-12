@@ -50,7 +50,7 @@ public class Filter implements FilenameFilter {
     public boolean accept(File dir, String name)
     {
 
-        if(this.limit==0)
+        if(this.limit!=null && this.limit==0)
             return false;
 
         File obj =new File(dir.getAbsolutePath() + File.separator + name);
@@ -67,7 +67,9 @@ public class Filter implements FilenameFilter {
         if(this.subFix!=null && name.length()>this.subFix.length() && !name.substring(name.length()-this.subFix.length(),name.length()).equalsIgnoreCase(this.subFix))
             return false;
 
-        this.limit--;
+        if(this.limit!=null)
+            this.limit--;
+        
         return true;
 
     }

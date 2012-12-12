@@ -15,7 +15,7 @@
 package BLK.Storage.Sql.Persistence;
 
 import BLK.io.Network.Protocols.Application.Sql.Connection;
-import BLK.io.Network.Protocols.Application.Sql.DataPair64;
+import BLK.Storage.DB.Relational.DataPair64;
 import java.sql.SQLException;
 
 /**

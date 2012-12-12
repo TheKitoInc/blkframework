@@ -20,6 +20,7 @@ import BLK.System.Utils.Hashtable;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
+import BLK.System.Utils.Math;
 /**
  *
  * @author The Blankis < blankitoracing@gmail.com >
@@ -243,6 +244,11 @@ public class File extends FileSystem {
             return null;
     }
 
+    public String getSign() 
+    {
+        return BLK.System.Utils.Math.numToString(this.getSize());
+    }
+
     @Deprecated
     public enum fileHashs {md5sum, sha1sum, crc32}
     @Deprecated
@@ -312,7 +318,7 @@ public class File extends FileSystem {
             String alg3=this.getSha1(reCalc);
 
             if(alg1!=null && alg2!=null && alg3!=null)
-                this.uid=(String.valueOf(this.getSize())+"z"+alg1+"x"+alg2+"y"+alg3).toUpperCase();
+                this.uid=("z"+Math.numToString(this.getSize(),15)+"z"+alg1+"z"+alg2+"z"+alg3+"z").toUpperCase();
         }
         return this.uid;
     }

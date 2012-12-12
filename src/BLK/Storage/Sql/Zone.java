@@ -19,7 +19,7 @@ import BLK.Storage.IAttribute;
 import BLK.Storage.IZone;
 import BLK.System.Utils.Pair;
 import BLK.io.Network.Protocols.Application.Sql.Connection;
-import BLK.io.Network.Protocols.Application.Sql.DataN;
+import BLK.Storage.DB.Relational.DataN;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
