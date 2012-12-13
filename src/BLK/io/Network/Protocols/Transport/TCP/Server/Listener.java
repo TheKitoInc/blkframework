@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package BLK.io.Network.Protocols.Transport.TCP;
+package BLK.io.Network.Protocols.Transport.TCP.Server;
 
 import BLK.System.Logger;
 import BLK.System.Threads.IterativeThread;
@@ -17,35 +17,37 @@ import java.util.ArrayList;
  *
  * @author andresrg
  */
-public abstract class Server extends IterativeThread
+public final class Listener extends IterativeThread
 {
     private int port;
     private int backlog;
     private InetAddress bindAddr;
     private int maxConnections;
+    private Events events;
     
     private ServerSocket ss=null;
     
     private ArrayList<Socket> connections = new ArrayList<Socket>();
     
-    protected int getMaxConnections() {return maxConnections;}
-    protected void setMaxConnections(int maxConnections) {this.maxConnections = maxConnections;}
-    protected int getPort() {return port;}
-    protected int getBacklog() {return backlog;}
-    protected InetAddress getBindAddr() {return bindAddr;}
-    protected ArrayList<Socket> getConnections() {return connections;}
+    public int getMaxConnections() {return maxConnections;}
+    public void setMaxConnections(int maxConnections) {this.maxConnections = maxConnections;}
+    public int getPort() {return port;}
+    public int getBacklog() {return backlog;}
+    public InetAddress getBindAddr() {return bindAddr;}
+    public ArrayList<Socket> getConnections() {return connections;}
     
-    protected Server(int port, int backlog, InetAddress bindAddr) 
+    public Listener(Events events, int port, int backlog, InetAddress bindAddr) 
     {
         super("TCPServer:"+port);
+        this.events = events;
         this.port = port;
         this.backlog = backlog;
         this.bindAddr = bindAddr;
         this.maxConnections = backlog;
     }
-    protected Server(int port, int backlog)  {this(port, backlog, null);}
-    protected Server(int port) {this(port, 10);}
-    protected Server() {this(0);}
+    public Listener(Events events, int port, int backlog)  {this(events, port, backlog, null);}
+    public Listener(Events events, int port) {this(events, port, 10);}
+    public Listener(Events events) {this(events, 0);}
     
     @Override
     public final void pause() {super.pause();}
@@ -113,11 +115,12 @@ public abstract class Server extends IterativeThread
         try 
         {
             final Socket s = this.ss.accept();
-            if(this.reject(s))
+            if(this.events.reject(s.getInetAddress()))
                 s.close();
             else
             {
-                final Server li=this;
+                final Listener li=this;
+                
                 (new Thread("TCPServerSocket:"+s.getInetAddress().getHostAddress()+":"+this.port) 
                 {
                     @Override
@@ -126,8 +129,8 @@ public abstract class Server extends IterativeThread
                         li.connections.add(s);
                         
                         try 
-                        {
-                            li.process(s);
+                        {                            
+                            li.events.process(li, s.getInputStream(), s.getOutputStream(), s.getInetAddress());
                         
                             if(!s.isClosed())                            
                                 s.close();
@@ -150,8 +153,6 @@ public abstract class Server extends IterativeThread
         }        
     }
 
-    protected Boolean reject(Socket s) {return false;}
-    protected abstract void process(Socket s)  throws IOException;
 
     
 }
