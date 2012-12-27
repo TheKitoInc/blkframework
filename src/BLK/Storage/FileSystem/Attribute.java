@@ -15,7 +15,7 @@
 package BLK.Storage.FileSystem;
 
 import BLK.Storage.IAttribute;
-import BLK.io.FileSystem.File;
+import BLK.io.FileSystem.Core.File;
 
 /**
  *

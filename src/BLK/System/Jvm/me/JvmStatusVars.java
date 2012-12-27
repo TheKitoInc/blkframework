@@ -16,8 +16,8 @@ package BLK.System.Jvm.me;
 
 import BLK.System.*;
 import BLK.System.Utils.Hashtable;
-import BLK.io.FileSystem.File;
-import BLK.io.FileSystem.Folder;
+import BLK.io.FileSystem.Core.File;
+import BLK.io.FileSystem.Core.Folder;
 
 
 

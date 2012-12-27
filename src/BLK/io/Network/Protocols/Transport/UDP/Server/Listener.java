@@ -83,18 +83,32 @@ public final class Listener extends IterativeThread
         try 
         {
             byte buf[] = new byte[this.packageBytes];
+            
             DatagramPacket p = new DatagramPacket(buf, buf.length);            
             this.ds.receive(p);
-            InetAddress remoteip = p.getAddress();
-            int remoteport = p.getPort();
+
+            final byte data[] = new byte[p.getLength()];
+            System.arraycopy(buf, 0, data, 0, data.length);
+            buf = null;
             
-            try
-            {
-                byte data[] = new byte[p.getLength()];
-                System.arraycopy(buf, 0, data, 0, data.length);
-                this.events.process(this,data,remoteport,remoteip);
-            }
-            catch(Exception ex){}
+            final InetAddress remoteip = p.getAddress();
+            final int remoteport = p.getPort();
+            
+            final Listener l = this;
+            (new BLK.System.Threads.Thread("UDPServerPacket:"+remoteip.getHostAddress()+":"+this.port) {
+
+                @Override
+                protected void doThread() 
+                {
+                    try
+                    {
+                        l.events.process(l,data,remoteport,remoteip);
+                    }
+                    catch(Exception ex){}
+                }
+                
+            }).start();
+                    
             
         }
         catch(SocketTimeoutException tex){}

@@ -17,7 +17,7 @@ package BLK.System.Jvm.me;
 import BLK.System.Jvm.*;
 import BLK.System.Utils.ArrayList;
 import BLK.System.Utils.Hashtable;
-import BLK.io.FileSystem.File;
+import BLK.io.FileSystem.Core.File;
 import java.util.Enumeration;
 
 

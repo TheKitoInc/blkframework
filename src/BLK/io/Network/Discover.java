@@ -14,7 +14,7 @@
 
 package BLK.io.Network;
 
-import BLK.io.FileSystem.File;
+import BLK.io.FileSystem.Core.File;
 
 import BLK.System.Logger;
 
@@ -187,7 +187,7 @@ public class Discover implements Runnable, IDiscover{
         try
         {
             if(ServerID_==null)
-                obj = new Discover(new BLK.io.FileSystem.File("/etc/ServerID").getString("BLK.UNKNOWN", true));
+                obj = new Discover(new BLK.io.FileSystem.Core.File("/etc/ServerID").getString("BLK.UNKNOWN", true));
             else
                 obj = new Discover(ServerID_);
 

@@ -12,7 +12,7 @@
  *
  */
 
-package BLK.io.FileSystem;
+package BLK.io.FileSystem.Core;
 
 import BLK.System.Logger;
 import BLK.System.Os.Process;
@@ -21,6 +21,9 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 import BLK.System.Utils.Math;
+import BLK.io.FileSystem.FileSystem;
+import BLK.io.FileSystem.FileSystemException;
+import BLK.io.FileSystem.Transaction;
 /**
  *
  * @author The Blankis < blankitoracing@gmail.com >

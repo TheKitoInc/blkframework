@@ -19,7 +19,7 @@ import BLK.Storage.Sql.Persistence.AttributeName;
 import BLK.Storage.Sql.Persistence.AttributePair;
 import BLK.Storage.Sql.Persistence.AttributeValue;
 import BLK.Storage.Sql.Persistence.ZoneAttribute;
-import BLK.io.FileSystem.File;
+import BLK.io.FileSystem.Core.File;
 import java.util.ArrayList;
 
 /**

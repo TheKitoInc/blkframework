@@ -13,7 +13,7 @@
  */
 package BLK.System.Jvm;
 
-import BLK.io.FileSystem.File;
+import BLK.io.FileSystem.Core.File;
 import BLK.System.Logger;
 
 /**

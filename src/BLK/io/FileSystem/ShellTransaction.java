@@ -14,6 +14,9 @@
 
 package BLK.io.FileSystem;
 
+import BLK.io.FileSystem.Core.File;
+import BLK.io.FileSystem.Core.Folder;
+
 /**
  *
  * @author The Blankis < blankitoracing@gmail.com >

@@ -16,7 +16,7 @@ package BLK.Storage.FileSystem;
 
 import BLK.Storage.IAttribute;
 import BLK.Storage.IZone;
-import BLK.io.FileSystem.Folder;
+import BLK.io.FileSystem.Core.Folder;
 
 /**
  *

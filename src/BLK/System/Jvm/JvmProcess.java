@@ -16,7 +16,7 @@ package BLK.System.Jvm;
 
 import BLK.System.Os.Process;
 import BLK.System.Utils.ArrayList;
-import BLK.io.FileSystem.File;
+import BLK.io.FileSystem.Core.File;
 
 
 /**

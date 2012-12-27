@@ -14,7 +14,7 @@
 
 package BLK.io.Network.Protocols.Application.Http;
 
-import BLK.io.FileSystem.File;
+import BLK.io.FileSystem.Core.File;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;

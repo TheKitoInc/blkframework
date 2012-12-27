@@ -4,7 +4,7 @@
  */
 package BLK.System.Os.Windows;
 
-import BLK.io.FileSystem.File;
+import BLK.io.FileSystem.Core.File;
 
 
 /**

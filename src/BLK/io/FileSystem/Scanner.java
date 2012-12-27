@@ -4,6 +4,8 @@
  */
 package BLK.io.FileSystem;
 
+import BLK.io.FileSystem.Core.File;
+import BLK.io.FileSystem.Core.Folder;
 import BLK.System.Quere;
 import BLK.System.Threads.IterativeThread;
 import java.util.ArrayList;

@@ -14,6 +14,8 @@
 
 package BLK.io.FileSystem;
 
+import BLK.io.FileSystem.Core.File;
+import BLK.io.FileSystem.Core.Folder;
 import java.util.ArrayList;
 import java.util.Collection;
 
