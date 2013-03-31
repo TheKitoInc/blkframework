@@ -16,6 +16,7 @@ package BLK.Storage.DB.Relational;
 
 import BLK.System.Utils.Pair;
 import BLK.io.Network.Protocols.Application.Sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -26,29 +27,34 @@ import java.util.ArrayList;
 public class DataPair extends DataN
 {
 
-    private String tableValue;
-    public DataPair(Integer id,String tableName,String tablePk,String tableValue,Connection cnn) throws SQLException
+    private String tableCol;
+    private String tableSrchCol = null;
+
+    public DataPair(Connection driver,String tableName,String tablePK,String tableCol,String tableSrchCol) throws SQLException
     {
-        super(id, tableName, tablePk, cnn);
-        this.tableValue=tableValue;
+        this(driver, tableName, tablePK, tableCol);
+        this.tableSrchCol=tableSrchCol;
     }
 
-    public DataPair(Object value,String tableName,String tablePk,String tableValue,Connection cnn) throws SQLException
+    public DataPair(Connection driver,String tableName,String tablePK,String tableCol) throws SQLException
     {
-        super(DataPair.getFromValue(tableValue, value), tableName, tablePk, cnn);
-        this.tableValue=tableValue;
+        super(driver, tableName, tablePK);
+        this.tableCol=tableCol;
     }
-
-    private static ArrayList<Pair> getFromValue(String tableValue, Object value)
+ 
+    public Integer getId(String value) throws SQLException
     {
-           ArrayList<Pair> lst= new ArrayList<Pair>();
-           lst.add(new Pair(tableValue,value));
-           return lst;
+        ArrayList<Pair> tmp = new ArrayList<Pair>();
+        tmp.add(new Pair(this.tableCol, value));
+        return super.getId(tmp);
     }
 
     @Override
-    public Integer getId() {return super.getId();}
-    public Object getValue() {return super.getValue(this.tableValue);}
+    public Object getValue(Integer pk) throws SQLException
+    {
+        ResultSet rs = (ResultSet)super.getValue(pk);
+        return rs.getString(this.tableCol);
+    }
 
 
 }

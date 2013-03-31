@@ -61,6 +61,11 @@ public class Process extends Thread
     {
         try
         {
+            if(this.process!=null)
+                this.process.destroy();
+
+            this.process=null;
+
             this.is=null;
             this.os=null;
             this.es=null;
@@ -80,21 +85,21 @@ public class Process extends Thread
         catch (IOException ex)
         {         
             this.exitValue=Integer.MIN_VALUE;            
-            Logger.getLogger().error(ex);         
+            Logger.getLogger().error(ex);
+            if(this.process!=null)
+                this.process.destroy();
         }
         catch (InterruptedException ex)
         {            
             this.exitValue=Integer.MIN_VALUE+1;
-            Logger.getLogger().warn(ex);         
+            Logger.getLogger().warn(ex);
+            if(this.process!=null)
+                    this.process.destroy();
         }
 
-        if(this.process!=null)
-            this.process.destroy();
-        
-        this.process=null;
-        this.is=null;
-        this.os=null;
-        this.es=null;            
+//        this.is=null;
+//        this.os=null;
+//        this.es=null;
 
         System.gc();
     }

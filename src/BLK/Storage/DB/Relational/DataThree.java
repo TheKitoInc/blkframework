@@ -16,6 +16,7 @@ package BLK.Storage.DB.Relational;
 
 import BLK.System.Utils.Pair;
 import BLK.io.Network.Protocols.Application.Sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -25,32 +26,35 @@ import java.util.ArrayList;
  */
 public class DataThree extends DataN
 {
-    private String tableValue1;
-    private String tableValue2;
-    public DataThree(Integer id,String tableName,String tablePk,String tableValue1,String tableValue2,Connection cnn) throws SQLException
+
+    private String tableCol0;
+    private String tableCol1;
+
+    public DataThree(Connection driver,String tableName,String tablePK,String tableCol0,String tableCol1) throws SQLException
     {
-        super(id, tableName, tablePk, cnn);
-        this.tableValue1=tableValue1;
-        this.tableValue2=tableValue2;
+        super(driver, tableName, tablePK);
+        this.tableCol0=tableCol0;
+        this.tableCol1=tableCol1;
     }
 
-    public DataThree(Object value1,Object value2,String tableName,String tablePk,String tableValue1,String tableValue2,Connection cnn) throws SQLException
+    public Integer getId(String value0,String value1) throws SQLException
     {
-        super(DataThree.getFromValue(tableValue1, value1,tableValue2, value2), tableName, tablePk, cnn);
-        this.tableValue1=tableValue1;
-        this.tableValue2=tableValue2;
+        ArrayList<Pair> tmp = new ArrayList<Pair>();
+        tmp.add(new Pair(this.tableCol0, value0));
+        tmp.add(new Pair(this.tableCol1, value1));
+        return super.getId(tmp);
     }
 
-    private static ArrayList<Pair> getFromValue(String tableValue1, Object value1,String tableValue2, Object value2)
+    public String getValue0(Integer pk) throws SQLException
     {
-           ArrayList<Pair> lst= new ArrayList<Pair>();
-           lst.add(new Pair(tableValue1,value1));
-           lst.add(new Pair(tableValue2,value2));
-           return lst;
+        ResultSet rs = (ResultSet)super.getValue(pk);
+        return rs.getString(this.tableCol0);
     }
 
-    @Override
-    public Integer getId() {return super.getId();}
-    public Object getValue1() {return super.getValue(this.tableValue1);}
-    public Object getValue2() {return super.getValue(this.tableValue2);}
+    public String getValue1(Integer pk) throws SQLException
+    {
+        ResultSet rs = (ResultSet)super.getValue(pk);
+        return rs.getString(this.tableCol1);
+    }
+
 }

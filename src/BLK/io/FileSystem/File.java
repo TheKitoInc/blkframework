@@ -12,7 +12,7 @@
  *
  */
 
-package BLK.io.FileSystem.Core;
+package BLK.io.FileSystem;
 
 import BLK.System.Logger;
 import BLK.System.Os.Process;
@@ -21,8 +21,6 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 import BLK.System.Utils.Math;
-import BLK.io.FileSystem.FileSystemException;
-import BLK.io.FileSystem.Transaction;
 /**
  *
  * @author The Blankis < blankitoracing@gmail.com >
@@ -520,48 +518,44 @@ public class File extends FileSystem {
         return lines;
     }
 
-    public File getRaw()
-    {
-        File f=File.getTemp(this.getExtension());
-        try
-        {
-            Transaction t = new Transaction();
-            t.addOperation(Transaction.operations.copy, this, f);
-
-            if(t.doIt())
-                return f;
-            else
-                return null;
-        }
-        catch (FileSystemException ex)
-        {
-            Logger.getLogger().error(ex);
-            return null;
-        }
-    }
-    public Boolean setRaw(File newRaw,Boolean deleteSource)
-    {
-        try
-        {
-            Transaction t = new Transaction();
-            t.addOperation(Transaction.operations.delete, this, null);
-
-            if(deleteSource)
-                t.addOperation(Transaction.operations.move, newRaw, this);
-            else
-                t.addOperation(Transaction.operations.copy, newRaw, this);
-
-            return t.doIt();
-        }
-        catch (FileSystemException ex)
-        {
-            Logger.getLogger().error(ex);
-            return false;
-        }
-    }
+//    public File getRaw()
+//    {
+//        File f=File.getTemp(this.getExtension());
+//        try
+//        {
+//            Transaction t = new Transaction();
+//            t.addOperation(Transaction.operations.copy, this, f);
+//
+//            if(t.doIt())
+//                return f;
+//            else
+//                return null;
+//        }
+//        catch (FileSystemException ex)
+//        {
+//            Logger.getLogger().error(ex);
+//            return null;
+//        }
+//    }
+//    public Boolean setRaw(File newRaw,Boolean deleteSource)
+//    {
+//        try
+//        {
+//            Transaction t = new Transaction();
+//            t.addOperation(Transaction.operations.delete, this, null);
+//
+//            if(deleteSource)
+//                t.addOperation(Transaction.operations.move, newRaw, this);
+//            else
+//                t.addOperation(Transaction.operations.copy, newRaw, this);
+//
+//            return t.doIt();
+//        }
+//        catch (FileSystemException ex)
+//        {
+//            Logger.getLogger().error(ex);
+//            return false;
+//        }
+//    }
     
-    public long getLastModified()
-    {
-        return super.getObject().lastModified();
-    }
 }

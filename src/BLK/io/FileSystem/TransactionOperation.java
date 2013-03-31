@@ -14,6 +14,7 @@
 
 package BLK.io.FileSystem;
 
+import BLK.io.FileSystem.Core.FileSystem;
 import BLK.io.FileSystem.Transaction.operations;
 import BLK.io.FileSystem.Transaction.status;
 

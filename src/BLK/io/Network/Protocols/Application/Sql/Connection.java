@@ -162,6 +162,37 @@ public class Connection
         return autoSelect(table, cols, null);
     }
 
+//    public ArrayList<ArrayList<Pair>> rsToArray(ResultSet rs) throws SQLException
+//    {
+//        ArrayList<ArrayList<Pair>> tmp = new ArrayList<ArrayList<Pair>>();
+//
+//        if(rs!=null)
+//        {
+//            rs.first();
+//
+//
+//            ResultSetMetaData rsmd = rs.getMetaData();
+//            String cols[] = new String[rsmd.getColumnCount()];
+//            for (int i=0; i<cols.length; i++)
+//                cols[i]=rsmd.getColumnName(i);
+//
+//
+//
+//
+//            while(rs.next())
+//            {
+//                ArrayList<Pair> row = new ArrayList<Pair>();
+//
+//                for (String col : cols)
+//                    row.add(new Pair(col, rs.getObject(col)));
+//
+//                tmp.add(row);
+//            }
+//
+//        }
+//        return tmp;
+//    }
+
 
     public ResultSet autoTable(String table,ArrayList<Pair> cols) throws SQLException
     {
@@ -172,9 +203,16 @@ public class Connection
         else
         {
             if(this.autoInsert(table, cols))
-                    return this.autoTable(table, cols);
+            {
+                    rs=this.autoSelect(table, cols, 1);
+                    if(rs!=null)
+                        return rs;
+                    else
+                        throw new SQLException("Insert error");        
+                    
+            }
             else
-                return null;
+                throw new SQLException("Insert error");
         }
         
     }

@@ -12,10 +12,9 @@
  *
  */
 
-package BLK.io.FileSystem.Core;
+package BLK.io.FileSystem;
 
 import BLK.System.Utils.ArrayList;
-import BLK.io.FileSystem.Filter;
 
 /**
  *

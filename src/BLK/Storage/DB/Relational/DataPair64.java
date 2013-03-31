@@ -25,37 +25,21 @@ import java.sql.SQLException;
 public class DataPair64 extends DataPair
 {
 
-    public DataPair64(String value, String tableName, String tablePk, String tableValue, Connection cnn) throws SQLException
+    public DataPair64(Connection driver, String tableName, String tablePK, String tableCol) throws SQLException
     {
-        super(DataPair64.toB64(value), tableName, tablePk, tableValue, cnn);
-    }
-
-    public DataPair64(Integer id, String tableName, String tablePk, String tableValue, Connection cnn) throws SQLException
-    {
-        super(id, tableName, tablePk, tableValue, cnn);
+        super(driver, tableName, tablePK, tableCol);
     }
 
     @Override
-    public Integer getId()
+    public Integer getId(String value) throws SQLException
     {
-        return super.getId();
+        return super.getId(Base64.doEncode(value));
     }
 
     @Override
-    public Object getValue()
+    public Object getValue(Integer pk) throws SQLException
     {
-        return DataPair64.fromB64(super.getValue().toString());
-    }
-
-
-
-    private static String fromB64(String b64Str)
-    {
-        return Base64.doDecode(b64Str);
-    }
-    private static String toB64(String str)
-    {
-        return Base64.doEncode(str);
+        return Base64.doDecode(super.getValue(pk).toString());
     }
 
 }

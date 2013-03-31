@@ -25,14 +25,14 @@ public class Quere<T>
     public Quere(int size) 
     {
         this.data = new Object[size];
-        this.writes = new Semaphore(size);        
+        this.writes = new Semaphore(size);       
     }
     
-    private int getCRead() throws InterruptedException
+    private int getCRead() 
     {
-        this.reads.acquire();
+        this.reads.acquireUninterruptibly();
         
-        this.sc_read.acquire();
+        this.sc_read.acquireUninterruptibly();
         
         this.c_read++;
         
@@ -45,11 +45,11 @@ public class Quere<T>
         return i;
     }
     
-    private int getCWrite() throws InterruptedException
+    private int getCWrite()
     {
-        this.writes.acquire();
+        this.writes.acquireUninterruptibly();
         
-        this.sc_write.acquire();
+        this.sc_write.acquireUninterruptibly();
         
         this.c_write++;
         
@@ -62,16 +62,27 @@ public class Quere<T>
         return i;
     }    
     
-    public void write(T data) throws InterruptedException
+    public void write(T data)
     {
         this.data[this.getCWrite()]=data;
         this.reads.release();
     }
     
-    public T read() throws InterruptedException
+    public T read()
     {
         Object o = this.data[this.getCRead()];
         this.writes.release();
         return (T) o;
     }
+    
+    public boolean nextReadLock()
+    {
+        return this.reads.availablePermits()==0;
+    }
+    
+    public boolean nextWriteLock()
+    {
+        return this.writes.availablePermits()==0;
+    }
+
 }

@@ -12,10 +12,8 @@
  *
  */
 
-package BLK.io.FileSystem;
+package BLK.io.FileSystem.Core;
 
-import BLK.io.FileSystem.Core.File;
-import BLK.io.FileSystem.Core.Folder;
 import BLK.System.Logger;
 import BLK.System.Os.Process;
 import java.io.IOException;

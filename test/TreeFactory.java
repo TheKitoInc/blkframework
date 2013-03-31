@@ -14,7 +14,7 @@
 
 package BLK.Storage;
 
-import BLK.io.FileSystem.Folder;
+import BLK.io.FileSystem.Core.Folder;
 import BLK.io.Network.Protocols.Application.Sql.Connection;
 
 /**

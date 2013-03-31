@@ -17,7 +17,6 @@ package BLK.Storage.DB.Relational;
 import BLK.System.Utils.Pair;
 import BLK.io.Network.Protocols.Application.Sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -28,106 +27,49 @@ import java.util.ArrayList;
 public class DataN
 {
 
-    private Integer id;
-    private ArrayList<Pair> lst;
-
-    private String tablePk;
-    private Connection cnn;
+    private Connection driver;
     private String tableName;
-
-
-    private DataN(String tableName,String tablePk,Connection cnn)
+    private String tablePK;
+    
+    public Connection getDriver()
     {
+        return driver;
+    }
+
+    public String getTableName()
+    {
+        return tableName;
+    }
+
+    public String getTablePK()
+    {
+        return tablePK;
+    }
+
+    public DataN(Connection driver,String tableName,String tablePK) throws SQLException
+    {
+        this.driver=driver;
         this.tableName=tableName;
-        this.tablePk=tablePk;
-        this.cnn=cnn;
+        this.tablePK=tablePK;
     }
 
-    public DataN(Connection cnn)
+    public Integer getId(ArrayList<Pair> values) throws SQLException
     {
-        this.id=null;
-        this.lst=new ArrayList<Pair>();
-        this.cnn=cnn;
+        ResultSet rs = this.driver.autoTable(this.tableName, values);
+        return rs.getInt(this.tablePK);
     }
-
-    public DataN(Integer id,String tableName,String tablePk,Connection cnn) throws SQLException
+    
+    public Object getValue(Integer pk) throws SQLException
     {
-        this(tableName, tablePk, cnn);
-        this.id = id;
-        this.lst=new ArrayList<Pair>();
+        ArrayList<Pair> sel = new ArrayList<Pair>();
+        sel.add(new Pair(this.tablePK, pk));
 
-        ArrayList<Pair> lst2= new ArrayList<Pair>();
-        lst2.add(new Pair(this.tablePk,this.id));
-        ResultSet rs = cnn.autoSelect(this.tableName, lst2);
+        ResultSet rs = this.driver.autoSelect(this.tableName,sel, 1);
 
         if(rs==null)
             throw new SQLException("Invalid PK");
 
-        ResultSetMetaData rsmd = rs.getMetaData();
-        int numColumns = rsmd.getColumnCount();
-
-        for (int i=1; i<numColumns+1; i++)
-        {
-            String columnName = rsmd.getColumnName(i);
-            if(!this.tablePk.equalsIgnoreCase(columnName))
-                this.lst.add(new Pair(columnName, rs.getObject(columnName)));
-
-        }
-
-
-
+        return rs;
     }
 
-    public DataN(ArrayList<Pair> lst,String tableName,String tablePk,Connection cnn) throws SQLException
-    {
-        this(tableName, tablePk, cnn);
-        this.lst=lst;
-
-        ResultSet rs = cnn.autoTable(this.tableName, this.lst);
-
-        if(rs==null)
-            throw new SQLException("Insert ERROR");
-
-        this.id=rs.getInt(tablePk);
-    }
-
-
-    public Integer getId() {return id;}
-    public ArrayList<Pair> getValues() {return lst;}
-
-    public Object getValue(String tableCol)
-    {
-        for(Pair p : this.getValues())
-        {
-            if(p.getName().equalsIgnoreCase(tableCol))
-                return p.getValue();
-        }
-        return null;
-    }
-
-    public Boolean delete()
-    {
-        ArrayList<Pair> lst2= new ArrayList<Pair>();
-        lst2.add(new Pair(this.tablePk,this.id));
-        return this.cnn.autoDelete(this.tableName, lst2);
-    }
-    
-    public Boolean inUse(String table,String col)
-    {
-        ArrayList<Pair> lst2= new ArrayList<Pair>();
-        lst2.add(new Pair(col,this.id));
-
-        try
-        {
-            return this.cnn.autoSelect(table, lst2) != null;
-        }
-        catch (SQLException ex)
-        {
-            return true;
-        }
-    }
-
-    public Connection getCnn() {
-        return this.cnn;
-    }
 }
